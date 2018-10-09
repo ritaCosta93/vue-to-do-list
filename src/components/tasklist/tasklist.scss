@@ -1,0 +1,32 @@
+.vtdl-task-list {
+    &__table {
+        &-head {
+            display: table;
+            width: 100%;
+        }
+
+        &-body {
+            display: block;
+            width: 100%;
+            height: calc(100vh - 370px);
+            overflow: auto;
+        }
+
+        &-actions {
+            width: 50px;
+            word-break: keep-all;
+            white-space: nowrap;
+        }
+
+        &-number {
+            width: 50px;
+            word-break: keep-all;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .material-icons {
+            font-size: 1.4rem;
+        }
+    }
+}

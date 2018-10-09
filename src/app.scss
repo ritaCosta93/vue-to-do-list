@@ -1,0 +1,12 @@
+// global styles
+.vtdl-app {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    min-width: 320px;
+
+    .vtdl-main {
+        flex: 1 0 auto;
+        overflow-y: scroll;
+    }
+}

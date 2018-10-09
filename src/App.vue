@@ -1,29 +1,31 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    
-    <Header />
-  </div>
+    <div class="vtdl-app">
+        <Header/>
+        <main class="vtdl-main">
+            <router-view/>
+        </main>
+        <Footer/>
+    </div>
 </template>
 
 <script>
+import Vue from 'vue';
+import VueResource from 'vue-resource';
+import Header from '@/components/header/header';
+import Footer from '@/components/footer/footer';
 
-import Header from './components/Header/Header.vue'
+Vue.use(VueResource);
+
 export default {
-  name: 'app',
+  name: 'App',
+
   components: {
-    Header,
+      Header,
+      Footer
   }
-}
+};
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="scss">
+    @import 'app.scss';
 </style>
