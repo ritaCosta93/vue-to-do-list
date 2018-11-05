@@ -9,10 +9,10 @@
         <div class="row">
             <div class="col s12">
                 <div class="task">
-                    <button id="addNewTask" class="btn waves-effect waves-light blue" type="button">
+                    <button @click="addNewTask" class="btn waves-effect waves-light blue" type="button">
                         <i class="material-icons left">add</i>Add New Task
                     </button>
-                    <button id="clearTaskList" class="btn waves-effect waves-light blue" type="button">
+                    <button @click="clearTaskList" class="btn waves-effect waves-light blue" type="button">
                         <i class="material-icons left">clear_all</i>Clear Task List
                     </button>
                 </div>
@@ -29,7 +29,7 @@
                         </tr>
                     </thead>
                     <tbody id="taskList" class="vtdl-task-list__table-body">
-                        <Task :key="index" :task="task" v-for="(task, index) in tasks"/>
+                        <Task ref="task" @updateTaskNumbers="updateTaskNumbers" :key="index" :task="task" v-for="(task, index) in tasks"/>
                     </tbody>
                 </table>
             </div>
@@ -42,29 +42,47 @@ import Task from '@/components/task/task';
 
 export default {
   name: 'tasklist',
-
   components: {
     Task
   },
-
   data() {
     return {
       tasks: []
     };
   },
-
   created: function() {
-    console.log('Tasks ran');
-
     // get the tasks list
+    this.$eventBus.$emit('showMask');
     this.$http
       .get('http://jsonplaceholder.typicode.com/todos')
       .then(function(response) {
-        console.log(response.body);
-
+        // console.log(response.body);
+        // load the JSON tasks into the data variable
         this.tasks = response.body;
-
+        this.$eventBus.$emit('hideMask');
       });
+  },
+  methods: {
+    addNewTask() {},
+    clearTaskList() {
+      for (var i = 0; i < this.$refs.task.length; i++) {
+        this.$refs.task[i].$el.remove();
+        this.$refs.task[i].$destroy();
+      }
+    },
+    updateTaskNumbers() {
+      let counter = 1;
+      for (var i = 0; i < this.$refs.task.length; i++) {
+        if (
+          document
+            .getElementsByTagName('body')[0]
+            .contains(this.$refs.task[i].$refs.taskNumber)
+        ) {
+          this.$refs.task[i].$refs.taskNumber.innerText = counter++;
+        }
+        this.$eventBus.$emit('hideMask');
+      }
+    }
   }
 };
 </script>
